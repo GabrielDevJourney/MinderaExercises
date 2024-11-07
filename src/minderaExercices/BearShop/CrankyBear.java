@@ -1,3 +1,6 @@
+package minderaExercices.BearShop;
+
+
 public class CrankyBear extends Bear {
 	private boolean hasSang = false;
 

@@ -1,3 +1,5 @@
+package minderaExercices.BearShop;
+
 public class Shop {
 	private int bearCounter;
 	private String name;

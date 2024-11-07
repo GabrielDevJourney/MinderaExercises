@@ -40,6 +40,6 @@ public class Table {
 		//get table free state and set it to true
 	}
 
-	
+
 
 }

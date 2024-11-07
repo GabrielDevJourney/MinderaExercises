@@ -1,3 +1,6 @@
+package minderaExercices.BearShop;
+
+
 public class SimpleBear extends Bear {
 
 	public SimpleBear() {

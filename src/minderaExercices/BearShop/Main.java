@@ -1,3 +1,5 @@
+package minderaExercices.BearShop;
+
 public class Main {
 	public static void main(String[] args) {
 		Shop bearShop = new Shop("Shop1");

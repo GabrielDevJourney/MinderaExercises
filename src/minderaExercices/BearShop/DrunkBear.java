@@ -1,3 +1,6 @@
+package minderaExercices.BearShop;
+
+
 public class DrunkBear extends Bear {
 
 	public DrunkBear() {

@@ -1,3 +1,5 @@
+package minderaExercices.BearShop;
+
 public class Bear {
 	protected int battery;
 
@@ -16,7 +18,7 @@ public class Bear {
 	}
 
 	public String talk() {
-		return "I LOVE YOU";
+		return "";
 	}
 	//When its batteries are exhausted, it loses its ability to talk.
 	//everytime it talks reduce battery
