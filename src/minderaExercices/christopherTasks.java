@@ -1,3 +1,5 @@
+package minderaExercices;
+
 import java.util.Arrays;
 
 public class christopherTasks {
