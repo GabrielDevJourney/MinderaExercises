@@ -40,11 +40,6 @@ public class Table {
 		//get table free state and set it to true
 	}
 
-
-
-	private void saveOrder(String order){
-		//ask for a order of the client and save it into the table property of order
-	}
-
+	
 
 }

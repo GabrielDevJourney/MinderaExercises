@@ -6,9 +6,6 @@ public class Restaurant {
 	private boolean fullCapacity;
 	private int numberOfTablesOccupied;
 
-	//each time a restaurant is created do ++
-	private int restaurantCount;
-
 	public Restaurant(/* pass number of tables to be able to set a size for the tables array*/){
 		//initial state of the restaurant
 		//clients can be the same size of table array since each table is only associated to one client
