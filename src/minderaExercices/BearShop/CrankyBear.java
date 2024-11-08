@@ -1,11 +1,10 @@
 package minderaExercices.BearShop;
 
-
 public class CrankyBear extends Bear {
-	private boolean hasSang = false;
 
 	public CrankyBear() {
-		becomeOutOfBattery();
+		super();
+		talkUntilNoBattery();
 	}
 
 	public String talk() {
@@ -14,16 +13,15 @@ public class CrankyBear extends Bear {
 	}
 
 	private String willBearSing() {
-		if (this.battery < 50) {
-			hasSang = true;
-			this.battery = 0;
-			return "Somebody wants you\n" +
-					"Somebody needs you\n" +
-					"Somebody dreams about you every single night\n" +
-					"Somebody can't breathe, without you it's lonely\n" +
-					"Somebody hopes that one day you will see\n" +
-					"That somebody's me.\n" +
-					"\n";
+		if (battery < 50) {
+			battery = 0;
+			return """
+					Somebody wants you
+					Somebody needs you
+					Somebody dreams about you every single night
+					Somebody can't breathe, without you it's lonely
+					Somebody hopes that one day you will see
+					That somebody's me.""";
 		}
 		return "Cranky bear : I love you";
 	}

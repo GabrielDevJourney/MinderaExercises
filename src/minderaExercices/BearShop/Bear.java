@@ -1,18 +1,19 @@
 package minderaExercices.BearShop;
 
 public class Bear {
+
 	protected int battery;
 
 	public Bear() {
 		this.battery = 100;
 	}
 
-	protected int reduceBattery() {
-		return this.battery -= 25;
+	public void reduceBattery() {
+		 this.battery =- 25;
 	}
 
-	protected void becomeOutOfBattery() {
-		while (this.battery > 0) {
+	protected void talkUntilNoBattery() {
+		while (battery > 0) {
 			System.out.println(talk());  // Print the returned String
 		}
 	}

@@ -1,14 +1,15 @@
 package minderaExercices.BearShop;
 
-
 public class SimpleBear extends Bear {
 
+
 	public SimpleBear() {
-		becomeOutOfBattery();
+		super();
+		talkUntilNoBattery();
 	}
 
 	public String talk() {
-		if (this.battery == 0) {
+		if (battery == 0) {
 			return "Simple bear : exhausted he can't talk right now";
 		}
 		reduceBattery();

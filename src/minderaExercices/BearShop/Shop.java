@@ -17,12 +17,11 @@ public class Shop {
 		return name;
 	}
 
-	public Bear createBears(int num) {
-		if (num % 5 == 0) {
+	public Bear createBears() {
+		if (bearCounter % 5 == 0) {
 			increaseCounting();
 			return new CrankyBear();
-		}
-		if (num % 2 == 0) {
+		} else if (bearCounter % 2 == 0) {
 			increaseCounting();
 			return new SimpleBear();
 		}
@@ -30,8 +29,8 @@ public class Shop {
 		return new DrunkBear();
 	}
 
-	protected int increaseCounting() {
-		return this.bearCounter++;
+	protected void increaseCounting() {
+		 this.bearCounter++;
 	}
 
 	public String compareToOtherStore(Shop otherShop) {
