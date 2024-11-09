@@ -17,20 +17,23 @@ public class Shop {
 		return name;
 	}
 
-	public Bear createBears() {
-		if (bearCounter % 5 == 0) {
-			increaseCounting();
-			return new CrankyBear();
-		} else if (bearCounter % 2 == 0) {
-			increaseCounting();
-			return new SimpleBear();
+	public void createBears(int num) {
+		for (int i = 0; i < num; i++) {
+			if (i % 5 == 0) {
+				increaseCounting();
+				new CrankyBear();
+			} else if (i % 2 == 0) {
+				increaseCounting();
+				new SimpleBear();
+			} else {
+				increaseCounting();
+				new DrunkBear();
+			}
 		}
-		increaseCounting();
-		return new DrunkBear();
 	}
 
 	protected void increaseCounting() {
-		 this.bearCounter++;
+		this.bearCounter++;
 	}
 
 	public String compareToOtherStore(Shop otherShop) {

@@ -9,7 +9,7 @@ public class Bear {
 	}
 
 	public void reduceBattery() {
-		 this.battery =- 25;
+		 this.battery -= 25;
 	}
 
 	protected void talkUntilNoBattery() {
