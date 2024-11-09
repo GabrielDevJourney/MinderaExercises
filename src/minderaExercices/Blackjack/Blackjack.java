@@ -1,5 +1,7 @@
 package minderaExercices.Blackjack;
 
+import minderaExercices.experiments.carExerciseOOP.Car;
+
 public class Blackjack {
 	//card instance to acess card class but not actually create a single card itself
 	Card[] deck;
@@ -12,9 +14,7 @@ public class Blackjack {
 
 	//gerar indice aleatorio para ir buscar carta random
 	private int randomIndexFullDeck() {
-		int number;
-		//only utilizes the new size of the deck everytime a card is delt the array avaliable index goes down
-		return number = (int) (Math.random() * Card.getFullDeckCounter());
+		return (int) (Math.random() * Card.getFullDeckCounter());
 	}
 
 	public Card dealCard() {
@@ -38,6 +38,7 @@ public class Blackjack {
 		//this way a card cant be drawn twice
 
 		Card.decreaseFullDeckCounter();
+		Card.resetDeck();
 		return currentCard;
 	}
 

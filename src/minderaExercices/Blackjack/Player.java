@@ -18,7 +18,7 @@ public class Player {
 		return playerName;
 	}
 
-	public int sumCards(Card currentPlayerCard) {
-		return this.playerScore += currentPlayerCard.getValueOfCard();
+	public int sumCards(int num) {
+		return this.playerScore += num;
 	}
 }

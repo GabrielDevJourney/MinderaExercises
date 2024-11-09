@@ -9,8 +9,8 @@ public class Game {
 	private static final String ANSI_BLUE = "\u001B[34m";
 	private static final String ANSI_PURPLE = "\u001B[35m";
 	private Blackjack blackjack;
-	private Player dealer;
-	private Player player1;
+	protected Player dealer;
+	protected Player player1;
 	private int finalScore = 21;
 
 	public Game() {
@@ -41,10 +41,28 @@ public class Game {
 
 	private void playTurn(Player player) {
 		Card currentCard = blackjack.dealCard();
-		player.sumCards(currentCard);
+		sumScore(currentCard,player);
 		displayTurnInfo(player, currentCard);
 	}
-
+	private void sumScore(Card currentCard, Player player){
+		int value;
+			switch (currentCard.getSymbol()) {
+				case "A":
+					if (player.getPlayerScore() <= 10) {
+						value = 11;
+					}else{
+						value = 1;
+					}
+				case "K", "Q", "J":
+					value = 10;
+					break;
+				default:
+					// this parse will work since i am previously safe guarding all possible case scenarios
+					value = Integer.parseInt(currentCard.getSymbol());
+					break;
+			}
+		player.sumCards(value);
+	}
 	private void displayTurnInfo(Player player, Card card) {
 
 		String playerColor = player.getPlayerName().equals("Dealer") ? ANSI_BLUE : ANSI_GREEN;
