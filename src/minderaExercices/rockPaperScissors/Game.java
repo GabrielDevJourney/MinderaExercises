@@ -115,7 +115,6 @@ public class Game {
 	}
 
 	public void modeBotVsPlayer() {
-		//TODO method to let user to choose user name to display within game
 		//set name o player1 to be bot and player2 to be the UserPlayer
 		//method to handle user input to play
 		//store user choice to further pass it to compare choices

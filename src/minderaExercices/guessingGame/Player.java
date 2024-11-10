@@ -1,7 +1,7 @@
 package minderaExercices.guessingGame;
 
 public class Player {
-	private static Player[] players = new Player[GameSetup.getInitialPlayersNumber()];
+	private static Player[] players;
 
 	//array that each player will have to store its own guesses this will be initialize in the
 	// constructor
@@ -22,6 +22,7 @@ public class Player {
 	private int winningCounter;
 
 	public Player(int playerId, int playerWinningCount, Game game) {
+
 		//since player id will start at 0 this means player1 will be 0 + 1 ...
 		this.game = game;
 		this.playerName = "Player" + (playerId + 1);
@@ -50,6 +51,10 @@ public class Player {
 
 	public static int[] getPlayersGuesses() {
 		return playersGuesses;
+	}
+
+	public static void initializePlayers(int size) {
+		players = new Player[size];
 	}
 
 	public int addingWinning() {
