@@ -49,7 +49,7 @@ public class Game {
 		return false;
 	}
 
-	private void addRandomNumToArray(int randomNumberGenerated) {
+	public void addRandomNumToArray(int randomNumberGenerated) {
 		if (counterAllRandomNums < gameAllRandomNums.length) {
 			gameAllRandomNums[counterAllRandomNums] = randomNumberGenerated;
 			counterAllRandomNums++;

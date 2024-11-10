@@ -40,16 +40,16 @@ public class Player {
 		playersGuesses = new int[playersGuessesSize];
 	}
 
-	public static int getPlayerCount() {
-		return playerCount;
-	}
-
 	public String getPlayerName() {
 		return this.playerName;
 	}
 
 	public int getWinningCounter() {
 		return winningCounter;
+	}
+
+	public static int[] getPlayersGuesses() {
+		return playersGuesses;
 	}
 
 	public int addingWinning() {
@@ -70,7 +70,7 @@ public class Player {
 	//method to add current guess to the array
 	//need t check if there is space to add the new guess
 	//void cuz is no return just passing value to the array when rando num is generated
-	private void addGuess(int guess) {
+	protected void addGuess(int guess) {
 		if (guessCount < playersGuesses.length) {
 			playersGuesses[guessCount] = guess;
 			guessCount++;
