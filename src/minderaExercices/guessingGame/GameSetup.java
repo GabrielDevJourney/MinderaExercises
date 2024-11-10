@@ -8,6 +8,7 @@ public class GameSetup {
 	//otherwise each would play its individual game
 	private final Game game = new Game();
 	private GameScanner scanner;
+	private Timer timer;
 	private Difficulty difficulty;
 
 	public GameSetup(int initialPlayersNumber) {
@@ -28,6 +29,8 @@ public class GameSetup {
 
 	public void startGame(Difficulty difficulty) {
 
+		Player.initializePlayers(initialPlayersNumber);
+
 		//SETTING THE RANGE MIN AND MAX VALUES BASED ON DIFFICULTY MODE
 		game.setMinRangeForRandomNumber(difficulty.getMinRange());
 		game.setRangeForRandomNumber(difficulty.calculateRange());
@@ -37,6 +40,10 @@ public class GameSetup {
 
 		//setting playerguesses size based on difficulty
 		Player.setPlayersGuesses(difficulty.calculateRange());
+
+		scanner = new GameScanner();
+		timer = new Timer(scanner);
+
 
 		initializePlayers(this.initialPlayersNumber, game);
 
@@ -82,8 +89,16 @@ public class GameSetup {
 
 	private boolean handleUserTurn(Player player, Difficulty difficulty) {
 
-		scanner = new GameScanner();
+		//evertytime is user turn i need to reset and start timer and only use the time.istimeup only after
+		// initializing the scanner otherwise will not work
+
+		timer.resetTimer();
+		timer.startTimer();
 		scanner.handleUserInput(difficulty);
+
+		if (timer.isTimeUp()) {
+			return false; //this will skip turn since the method will become false this means user cant play
+		}
 
 		int userGuess = scanner.getUserFinalChoice();
 		player.addGuess(userGuess);
