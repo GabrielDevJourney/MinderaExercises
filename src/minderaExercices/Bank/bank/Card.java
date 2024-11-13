@@ -2,18 +2,13 @@ package minderaExercices.Bank.bank;
 
 public abstract class Card {
 
-	//since one card can do it and another dont this must be without abstract so it doesnt become a mandatory method
-	// for all cards
-	public void withdrawMoney(int amountToWithdraw){
+	//each card will have its own cardid and package must have access
+	protected int cardId;
 
-	}
+	public abstract void withdraw(int amount);
 
-	public void depositMoney(int amountToDeposit){
+	public abstract void deposit(int amount);
 
-	}
-
-	public void payment(int amountToPay){
-
-	}
+	public abstract void payment(int amount);
 
 }

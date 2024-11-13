@@ -11,20 +11,22 @@ public class DebitCard extends Card{
 
 
 	@Override
-	public void withdrawMoney(int amountToWithdraw) {
+	public void withdraw(int amountToWithdraw) {
 		int currentBalance = debitAccount.getBalance();
 		debitAccount.updateBalance(currentBalance - amountToWithdraw);
 	}
 
 	@Override
-	public void depositMoney(int amountToDeposit){
+	public void deposit(int amountToDeposit) {
 		int currentBalance = debitAccount.getBalance();
 		debitAccount.updateBalance(currentBalance + amountToDeposit);
 	}
 
+
 	@Override
 	public void payment(int amountToPay){
 		int currentBalance = debitAccount.getBalance();
+
 		int possibleNegativeBalance = currentBalance - amountToPay;
 		if(currentBalance == 0 || possibleNegativeBalance < 0) {
 			System.out.println("Insuficient balance for payment");

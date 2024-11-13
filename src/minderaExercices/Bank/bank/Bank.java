@@ -3,9 +3,11 @@ package minderaExercices.Bank.bank;
 public class Bank {
 	private Account[] accounts;
 	private Customer[] customers = new Customer[10];
+	private static Card[] allCards = new Card[100];
 	private int customersCounter = 0;
 	private int accountsCounter = 0;
 	private static int ibanCounter = 0;
+	private static int allCardsCounter = 0;
 	private static int cardId = 0;
 
 	//private Customer[] customers;
@@ -128,13 +130,14 @@ public class Bank {
 	}
 
 
-	public void askCard(int iban, String nif) {
+	public int askCard(int iban, String nif) {
 
 		Customer customer = findCustomer(nif);
+		int newCardId = -1;
 
 		if (customer == null) {
 			System.out.println("Customer not found");
-			return;//error since it doesnt exist
+			return -1;
 		}
 
 		//find account matching iban passed
@@ -146,35 +149,127 @@ public class Bank {
 
 				if (!currentAccount.getOwnerNif().equals(nif)) {
 					System.out.println("This account doesnt belong to the this customer");
-					return; //error because card doesnt belong to that acc
+					return -1; //error because card doesnt belong to that acc
 				}
 
 				//see if here is space in the current account to store more cards
 				//if yes create otherwise dont
-				if (currentAccount.askCard()) {
-					int newCardId = generateNewCardId();
-					currentAccount.cardId[currentAccount.accountCardIdCounter] = newCardId;
-					currentAccount.accountCardIdCounter++;
 
-					//add number to customer cards id
-					customer.addCardIdToCustomer(newCardId);
-
-					System.out.println("Your card number for iban account " + currentAccount.getIban() + " is " + newCardId);
-
-					return;
-				}
-
-				return;// meaning something went wrong
+				newCardId = createNewCardToCustomer(currentAccount, customer);
+				return newCardId;
 			}
 		}
 		System.out.println("Account doesn't exists");
+		return -1;
+	}
+
+	private int createNewCardToCustomer(Account currentAccount, Customer customer) {
+		if (currentAccount.askCard()) {
+			int newCardId = generateNewCardId();
+			currentAccount.cardId[currentAccount.accountCardIdCounter] = newCardId;
+			currentAccount.accountCardIdCounter++;
+
+			//create card and pass it the cardId
+			createCardBasedOnAccountType(currentAccount, newCardId);
+
+			//add number to customer cards id
+			customer.addCardIdToCustomer(newCardId);
+
+			System.out.println("Your card number for iban account " + currentAccount.getIban() + " is " + newCardId);
+
+			return newCardId;
+		}
+		return -1; //error since there will be not cardid < 0
+	}
+
+	private static void createCardBasedOnAccountType(Account currentAccount, int newCardId) {
+		if (currentAccount instanceof CreditAccount) {
+			//casting otherwise will be passing account type and not creditaccount which is the arg type
+			CreditCard newCreditCard = new CreditCard((CreditAccount) currentAccount);
+
+			//give the card its type cardNumbers
+			newCreditCard.cardId = newCardId;
+			allCards[allCardsCounter] = newCreditCard;
+			allCardsCounter++;
+
+		} else if (currentAccount instanceof DebitAccount) {
+			DebitCard newDebitCard = new DebitCard((DebitAccount) currentAccount);
+
+			newDebitCard.cardId = newCardId;
+			allCards[allCardsCounter] = newDebitCard;
+			allCardsCounter++;
+
+		}
 	}
 
 
-	//?check if current customer based on nif has already account since it can only have one of each max
+	//*METHODS FOR OPERATIONS
 
-	//TODO mehtod pay this i will have has args nif, cardNumber, amount
-	//TODO cardNumber will be associated with an accountNumber since when i create an account i can askForCard to itself
-	//this will link both
+	public void deposit(int cardId, String nif, int amount) {
+		//bank.deposit(cardid,nif,amount)
+		//call find card(cardid)
+		//findcustomer(nif)
+		//call card.deposit(amount)
+
+		Card currentCard = findCard(cardId, nif);
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to thi nif");
+		} else {
+			currentCard.deposit(amount);
+		}
+	}
+
+
+	public void withdraw(int cardId, String nif, int amount) {
+		Card currentCard = findCard(cardId, nif);
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to this nif");
+		} else {
+			currentCard.withdraw(amount);
+		}
+	}
+
+	public void pay(int cardId, String nif, int amount) {
+		Card currentCard = findCard(cardId, nif);
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to this nif");
+		} else {
+			currentCard.payment(amount);
+		}
+	}
+
+
+	private Card findCard(int cardId, String nif) {
+
+		Customer currentCustomer = findCustomer(nif);
+		int[] currentCustomerCards;
+		boolean hasCardId = false;
+
+		if (currentCustomer != null) {
+			currentCustomerCards = currentCustomer.getCardId();
+		} else {
+			System.out.println("Customer doesnt exist");
+			return null;
+		}
+
+		//find card id in customer card id to see if it belongs
+		for (int i = 0; i < currentCustomerCards.length; i++) {
+			if (currentCustomerCards[i] == cardId) {
+				hasCardId = true;
+				break;
+			}
+		}
+		if (!hasCardId) return null;
+		//find the card in bank to acess the object
+
+		//i need to find the card
+		for (int i = 0; i < allCardsCounter; i++) {
+			if (allCards[i].cardId == cardId) {
+				return allCards[i];
+			}
+		}
+		return null;
+	}
+
 
 }
