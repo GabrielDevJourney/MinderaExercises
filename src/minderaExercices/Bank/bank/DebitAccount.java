@@ -10,7 +10,7 @@ public class DebitAccount extends Account{
 	}
 
 	@Override
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
@@ -26,8 +26,8 @@ public class DebitAccount extends Account{
 		return true;
 	}
 
-	public void withdraw(int amount) {
-		int possibleNegativeBalance = balance - amount;
+	public void withdraw(double amount) {
+		double possibleNegativeBalance = balance - amount;
 		if (balance == 0 || possibleNegativeBalance < 0) {
 			System.out.println("Not enough funds to withdraw");
 		} else {

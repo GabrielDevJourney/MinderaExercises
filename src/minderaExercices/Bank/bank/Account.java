@@ -2,7 +2,7 @@ package minderaExercices.Bank.bank;
 
 public abstract class Account {
 
-	 protected int balance;
+	protected double balance;
 	 protected int iban;
 	 protected String ownerNif;
 	 protected int[] cardId;
@@ -19,7 +19,7 @@ public abstract class Account {
 		return iban;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
@@ -33,13 +33,13 @@ public abstract class Account {
 
 	//*SETTERS
 
-	private void setBalance(int balance) {
+	private void setBalance(double balance) {
 		this.balance = balance;
 	}
 
 	//*METHODS
 
-	 protected void updateBalance(int amount){
+	protected void updateBalance(double amount) {
 		this.setBalance(amount);
 	}
 

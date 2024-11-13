@@ -11,29 +11,34 @@ public class DebitCard extends Card{
 
 
 	@Override
-	public void withdraw(int amountToWithdraw) {
-		int currentBalance = debitAccount.getBalance();
-		debitAccount.updateBalance(currentBalance - amountToWithdraw);
+	public void withdraw(double amount) {
+		double currentBalance = debitAccount.getBalance();
+		double newBalance = currentBalance - amount;
+		debitAccount.updateBalance(newBalance);
+		System.out.println("Previous balance was " + decimalFormatter(currentBalance) + " after withdraw you have " + decimalFormatter(newBalance));
 	}
 
 	@Override
-	public void deposit(int amountToDeposit) {
-		int currentBalance = debitAccount.getBalance();
-		debitAccount.updateBalance(currentBalance + amountToDeposit);
+	public void deposit(double amount) {
+		double currentBalance = debitAccount.getBalance();
+		double newBalance = currentBalance + amount;
+		debitAccount.updateBalance(newBalance);
+		System.out.println("Previous balance was " + decimalFormatter(currentBalance) + " after deposit you have " + decimalFormatter(newBalance));
 	}
 
 
 	@Override
-	public void payment(int amountToPay){
-		int currentBalance = debitAccount.getBalance();
+	public void payment(double amount) {
+		double currentBalance = debitAccount.getBalance();
+		double newBalance = currentBalance - amount;
 
-		int possibleNegativeBalance = currentBalance - amountToPay;
-		if(currentBalance == 0 || possibleNegativeBalance < 0) {
+		if (currentBalance == 0 || newBalance < 0) {
 			System.out.println("Insuficient balance for payment");
 			//exit otherwise will do the payment anyway
 			return;
 		}
-		debitAccount.updateBalance(currentBalance - amountToPay);
+		debitAccount.updateBalance(newBalance);
+		System.out.println("Previous balance was " + decimalFormatter(currentBalance) + " after payment you have " + decimalFormatter(newBalance));
 	}
 
 }

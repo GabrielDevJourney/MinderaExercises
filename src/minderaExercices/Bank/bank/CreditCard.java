@@ -1,6 +1,6 @@
 package minderaExercices.Bank.bank;
 
-public class CreditCard extends Card{
+public class CreditCard extends Card {
 
 	CreditAccount creditAccount;
 
@@ -10,24 +10,31 @@ public class CreditCard extends Card{
 	}
 
 	@Override
-	public void withdraw(int amount) {
+	public void withdraw(double amount) {
 		System.out.println("This card can't be use for withdraw only payments and deposits!");
 	}
 
 	@Override
-	public void deposit(int amount) {
-		int currentBalance = creditAccount.getBalance();
-		creditAccount.updateBalance(currentBalance + amount);
+	public void deposit(double amount) {
+		double currentBalance = creditAccount.getBalance();
+		double newBalance = currentBalance + amount;
+		creditAccount.updateBalance(newBalance);
+
+		System.out.println("Your previous balance was " + decimalFormatter(currentBalance) + " after deposit " +
+				"is " + decimalFormatter(newBalance));
 	}
 
 	@Override
-	public void payment(int amount) {
-		int currentBalance = creditAccount.getBalance();
-		int finalBalanceAfterPayment = currentBalance - amount;
+	public void payment(double amount) {
+
+		double currentBalance = creditAccount.getBalance();
+		double finalBalanceAfterPayment = currentBalance - amount;
 
 		if (finalBalanceAfterPayment >= 0) {
-
 			creditAccount.updateBalance(finalBalanceAfterPayment);
+			System.out.print("Your previous balance was " + decimalFormatter(currentBalance) + " after " +
+					"payment" + "is " + decimalFormatter(finalBalanceAfterPayment));
+
 		} else {
 			if (finalBalanceAfterPayment - creditAccount.getFeeOfUse() >= creditAccount.getMaxDebt()) {
 
@@ -36,6 +43,10 @@ public class CreditCard extends Card{
 			} else {
 				System.out.println("Not enough funds, please deposit some money to finish this transaction");
 			}
+			System.out.println("Your previous balance was " + decimalFormatter(currentBalance) + " after " +
+					"payment" +
+					" " +
+					"is " + decimalFormatter(finalBalanceAfterPayment));
 		}
 
 	}

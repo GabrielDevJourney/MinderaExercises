@@ -12,7 +12,7 @@ public class CreditAccount extends Account{
 		this.numberOfCreditCards = 0;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
