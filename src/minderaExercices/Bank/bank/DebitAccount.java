@@ -26,6 +26,14 @@ public class DebitAccount extends Account{
 		return true;
 	}
 
+	public void withdraw(int amount) {
+		int possibleNegativeBalance = balance - amount;
+		if (balance == 0 || possibleNegativeBalance < 0) {
+			System.out.println("Not enough funds to withdraw");
+		} else {
+			balance -= amount;
+		}
+	}
 
 	//!canPayAmount override if balance is zero or if it would go below zero and that cant happen
 

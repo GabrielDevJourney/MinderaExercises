@@ -43,18 +43,6 @@ public abstract class Account {
 		this.setBalance(amount);
 	}
 
-	public void depositMoney(int amountToDeposit){
-		balance += amountToDeposit;
-	}
-
-	//implement empty method for canPayAmount abstract
-
-	//!generate iban defaut method for both types, must be a easy numeber so when a customer wants to deposit or
-	// !withdraw
-	//!it will be able to say what account he want to deposit in and if the number is from a credit account it cant
-	//!withdraw
-
-
 	public abstract boolean askCard();
 
 
