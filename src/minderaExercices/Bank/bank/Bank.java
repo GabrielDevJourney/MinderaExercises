@@ -98,10 +98,17 @@ public class Bank {
 			return null;
 		}
 
+		if (hasAlreadyCreditAccount(nif)) {
+			System.out.println("Customer already has credit account max of one per customer reached");
+			return null;
+		}
+
 		CreditAccount newCreditAccount = new CreditAccount();
+
 
 		//link account to current customer nif
 		newCreditAccount.ownerNif = nif;
+
 		//first add account to bank accounts
 		accounts[accountsCounter] = newCreditAccount;
 		accountsCounter++;
@@ -202,43 +209,6 @@ public class Bank {
 		}
 	}
 
-
-	//*METHODS FOR OPERATIONS
-
-	public void deposit(int cardId, String nif, int amount) {
-		//bank.deposit(cardid,nif,amount)
-		//call find card(cardid)
-		//findcustomer(nif)
-		//call card.deposit(amount)
-
-		Card currentCard = findCard(cardId, nif);
-		if (currentCard == null) {
-			System.out.println("This card doesnt belong to thi nif");
-		} else {
-			currentCard.deposit(amount);
-		}
-	}
-
-
-	public void withdraw(int cardId, String nif, int amount) {
-		Card currentCard = findCard(cardId, nif);
-		if (currentCard == null) {
-			System.out.println("This card doesnt belong to this nif");
-		} else {
-			currentCard.withdraw(amount);
-		}
-	}
-
-	public void pay(int cardId, String nif, int amount) {
-		Card currentCard = findCard(cardId, nif);
-		if (currentCard == null) {
-			System.out.println("This card doesnt belong to this nif");
-		} else {
-			currentCard.payment(amount);
-		}
-	}
-
-
 	private Card findCard(int cardId, String nif) {
 
 		Customer currentCustomer = findCustomer(nif);
@@ -259,10 +229,11 @@ public class Bank {
 				break;
 			}
 		}
+
 		if (!hasCardId) return null;
 		//find the card in bank to acess the object
 
-		//i need to find the card
+		//i need to find the card object to use operations
 		for (int i = 0; i < allCardsCounter; i++) {
 			if (allCards[i].cardId == cardId) {
 				return allCards[i];
@@ -270,6 +241,60 @@ public class Bank {
 		}
 		return null;
 	}
+
+
+	//check if customer already has credit account since each one can only have one credit account
+	private boolean hasAlreadyCreditAccount(String nif) {
+		//go to all accounts check for those account with that nif
+		//then chek if that nif has any account of instance of creditaccon
+
+		for (int i = 0; i < accountsCounter; i++) {
+			//account must return not null, same nif and check for creditaccount type with instance of
+			if (accounts[i] != null && accounts[i].getOwnerNif() == nif && accounts[i] instanceof CreditAccount) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//*METHODS FOR OPERATIONS
+
+	public void deposit(int cardId, String nif, double amount) {
+		//bank.deposit(cardid,nif,amount)
+		//call find card(cardid)
+		//findcustomer(nif)
+		//call card.deposit(amount)
+
+		Card currentCard = findCard(cardId, nif);
+
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to thi nif");
+		} else {
+			currentCard.deposit(amount);
+		}
+	}
+
+
+	public void withdraw(int cardId, String nif, double amount) {
+		Card currentCard = findCard(cardId, nif);
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to this nif");
+		} else {
+			currentCard.withdraw(amount);
+		}
+	}
+
+	public void pay(int cardId, String nif, double amount) {
+		Card currentCard = findCard(cardId, nif);
+		if (currentCard == null) {
+			System.out.println("This card doesnt belong to this nif");
+		} else {
+			currentCard.payment(amount);
+		}
+	}
+
+
+
 
 
 }
