@@ -3,7 +3,7 @@ package minderaExercices.rockPaperScissors;
 public class Player {
 	private String name;
 	private int playerScore;
-	private String currentChoice;
+	private Options currentChoice;
 	private String playerType;
 
 	public Player(String name, int playerScore,String playerType) {
@@ -12,7 +12,7 @@ public class Player {
 		this.playerType = playerType;
 	}
 
-	public String getCurrentChoice() {
+	public Options getCurrentChoice() {
 		return currentChoice;
 	}
 
@@ -28,7 +28,7 @@ public class Player {
 		return playerType;
 	}
 
-	public void setCurrentChoice(String currentChoice) {
+	public void setCurrentChoice(Options currentChoice) {
 		this.currentChoice = currentChoice;
 	}
 
