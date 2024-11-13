@@ -1,9 +1,9 @@
-package minderaExercices.rockPaperScissors;
+package minderaExercices.rockPaperScissors.basic;
 
 public class Player {
 	private String name;
 	private int playerScore;
-	private Options currentChoice;
+	private String currentChoice;
 	private String playerType;
 
 	public Player(String name, int playerScore,String playerType) {
@@ -12,7 +12,7 @@ public class Player {
 		this.playerType = playerType;
 	}
 
-	public Options getCurrentChoice() {
+	public String getCurrentChoice() {
 		return currentChoice;
 	}
 
@@ -28,7 +28,7 @@ public class Player {
 		return playerType;
 	}
 
-	public void setCurrentChoice(Options currentChoice) {
+	public void setCurrentChoice(String currentChoice) {
 		this.currentChoice = currentChoice;
 	}
 

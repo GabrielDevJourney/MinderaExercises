@@ -1,4 +1,4 @@
-package minderaExercices.rockPaperScissors;
+package minderaExercices.rockPaperScissors.basic;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,18 +17,20 @@ public class Game {
 
 	
 	private final int roundsToWin = 3;
+	private final String[] choices = new String[]{"rock", "paper", "scissors"};
 	private final Scanner userMoveScanner;
 	private Player player1;
 	private Player player2;
+	private int userFinalMove;
 
 	public Game() {
 		userMoveScanner = new Scanner(System.in);
 	}
 
-	private Options generateChoice() {
-		//generate a OPTION choice
-		//generate a random OPTION value based on otpions values length that is 1 - 3
-		return Options.values()[(int) Math.random() * Options.values().length];
+	private String generateChoice() {
+		int randomIndex = (int) (Math.random() * choices.length);
+		String playerChoice = choices[randomIndex];
+		return playerChoice;
 	}
 
 	//based on type of player the way choice is generated changes
@@ -37,22 +39,20 @@ public class Game {
 		if (player1.getPlayerType().equals("bot")) {
 			player1.setCurrentChoice(generateChoice());
 		} else {
-			player1.setCurrentChoice(handlePlayerGame());
+			player1.setCurrentChoice(convertUserMove(handlePlayerGame()));
 		}
 		if (player2.getPlayerType().equals("user")) {
-			player2.setCurrentChoice(handlePlayerGame());
+			player2.setCurrentChoice(convertUserMove(handlePlayerGame()));
 		} else {
 			player2.setCurrentChoice(generateChoice());
 		}
 	}
 
-
-	//instead of comparing strings compare Optioins based on the player choice that is set in the playerchopice method
 	private int compareChoices() {
-		Options player1Choice = player1.getCurrentChoice();
-		Options player2Choice = player2.getCurrentChoice();
+		String player1Choice = player1.getCurrentChoice();
+		String player2Choice = player2.getCurrentChoice();
 
-		if (player1Choice == player2Choice) {
+		if (player1Choice.equals(player2Choice)) {
 			System.out.println(ANSI_YELLOW + "Both chose " + player1Choice + ANSI_RESET);
 			System.out.println(ANSI_YELLOW + "Round Tie!" + ANSI_RESET);
 			return -1;
@@ -67,8 +67,9 @@ public class Game {
 						ANSI_GREEN + player2Choice + ANSI_RESET
 		);
 
-		//call the winning possible moves from the Options possibilities player choice agains opponent choice
-		if (player1Choice.winningMoves(player2Choice)) {
+		if ((player1Choice.equals("rock") && player2Choice.equals("scissors")) ||
+				(player1Choice.equals("paper") && player2Choice.equals("rock")) ||
+				(player1Choice.equals("scissors") && player2Choice.equals("paper"))) {
 			System.out.println(ANSI_CYAN + player1.getName() + " wins this round!" + ANSI_RESET);
 			return 0;
 		} else {
@@ -127,21 +128,15 @@ public class Game {
 		player2 = new Player("User2", 0, "user");
 	}
 
-	//instead of handling string i will need to handle Options
-	public Options handlePlayerGame() {
+	public int handlePlayerGame() {
 		//better to have user just input a number then writting , like 1-rock, 2-paper, 3-scissors
 		int userMove = 0;
 		do {
 			System.out.println("\nEnter round move:");
-
-			//show all avalibale option to play based on id and name of the choice
-			//display options possible names that are in the enum
-			//options.values() is like a array of what exists in that enum class so go trough all of them and display
-			//their id and name so when a user gives a  from 1 - 3 i can assume what is the Options option he choose
-			for (Options option : Options.values()) {
-				System.out.println(option.getId() + ". " + option.getName());
-			}
-			System.out.println("Yout choice 1-3 is: ");
+			System.out.println("1. Rock");
+			System.out.println("2. Paper");
+			System.out.println("3. Scissors");
+			System.out.print("Your choice (1-3): ");
 			try {
 
 				if (userMoveScanner.hasNextInt()) {
@@ -149,9 +144,8 @@ public class Game {
 					userMoveScanner.nextLine();//clean scanner
 
 					if (userMove >= 1 && userMove <= 3) {
-						//TODO return option based on number that is Option id
-						//return of choosen Option based on user move number inputed into the scanner
-						return Options.optionChoosen(userMove);
+						userFinalMove = userMove;
+						break;
 					} else {
 						System.out.println("Input a valid option from 1 to 3");
 					}
@@ -165,6 +159,20 @@ public class Game {
 				System.out.println("Invalid input, please enter a number!");
 			}
 		} while (true);
+		return userFinalMove;
 	}
 
+	public String convertUserMove(int userFinalMove) {
+		switch (userFinalMove) {
+			case 2: {
+				return "paper";
+			}
+			case 3: {
+				return "scissors";
+			}
+			default: {
+				return "rock";
+			}
+		}
+	}
 }

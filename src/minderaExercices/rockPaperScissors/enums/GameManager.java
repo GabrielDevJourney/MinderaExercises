@@ -1,4 +1,4 @@
-package minderaExercices.rockPaperScissors;
+package minderaExercices.rockPaperScissors.enums;
 
 import java.util.Scanner;
 import java.util.InputMismatchException; //to catch if input type different from expected

@@ -1,4 +1,4 @@
-package minderaExercices.rockPaperScissors;
+package minderaExercices.rockPaperScissors.enums;
 
 public enum Options {
 	ROCK(1, "rock"),
