@@ -28,7 +28,7 @@ public class Game {
 	private Options generateChoice() {
 		//generate a OPTION choice
 		//generate a random OPTION value based on otpions values length that is 1 - 3
-		return Options.values()[(int) Math.random() * Options.values().length];
+		return Options.values()[(int) (Math.random() * Options.values().length)];
 	}
 
 	//based on type of player the way choice is generated changes
@@ -139,7 +139,7 @@ public class Game {
 			//options.values() is like a array of what exists in that enum class so go trough all of them and display
 			//their id and name so when a user gives a  from 1 - 3 i can assume what is the Options option he choose
 			for (Options option : Options.values()) {
-				System.out.println(option.getId() + ". " + option.getName());
+				System.out.println(option.getId() + ". " + option.getChoice());
 			}
 			System.out.println("Yout choice 1-3 is: ");
 			try {
