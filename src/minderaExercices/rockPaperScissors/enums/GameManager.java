@@ -9,8 +9,6 @@ public class GameManager {
 	private Scanner gameScanner;
 	//since there are only 3 otpions it is safer and better to have 2 final variables that dictate from where to
 	// where are available options
-	private static final int MIN_OPTION = 1;
-	private static final int MAX_OPTION = 3;
 	private Game initializeGame;
 
 	public GameManager() {
