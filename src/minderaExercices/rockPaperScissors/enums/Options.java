@@ -6,19 +6,19 @@ public enum Options {
 	SCISSORS(3, "scissors");
 
 	private int id;
-	private String name;
+	private String choice;
 
-	Options(int id, String name) {
+	Options(int id, String choice) {
 		this.id = id;
-		this.name = name;
+		this.choice = choice;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getChoice() {
+		return choice;
 	}
 
 	//based on user chopice return what was his option
