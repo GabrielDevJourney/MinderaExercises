@@ -8,7 +8,7 @@ public enum Options {
 	private int id;
 	private String choice;
 
-	Options(int id, String choice) {
+	private Options(int id, String choice) {
 		this.id = id;
 		this.choice = choice;
 	}
