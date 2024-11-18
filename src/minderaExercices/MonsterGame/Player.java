@@ -1,5 +1,7 @@
 package minderaExercices.MonsterGame;
 
+import minderaExercices.MonsterGame.Monsters.Monster;
+
 public class Player {
 
 	private int numberOfInitialCards = 10;
@@ -21,6 +23,10 @@ public class Player {
 		return numberOfCardsAlive;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void setPlayerCards(Monster[] playerCards) {
 		this.playerCards = playerCards;
 	}
@@ -29,6 +35,9 @@ public class Player {
 		this.hasLost = hasLost;
 	}
 
+	public void decreaseCardsAlive() {
+		numberOfCardsAlive--;
+	}
 	public boolean hasPlayerLose() {
 		if (numberOfCardsAlive == 0) {
 			return true;
