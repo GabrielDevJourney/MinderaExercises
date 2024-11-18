@@ -1,4 +1,4 @@
-package minderaExercices.MonsterGame;
+package minderaExercices.MonsterGame.Monsters;
 
 public class Vampire extends Monster {
 

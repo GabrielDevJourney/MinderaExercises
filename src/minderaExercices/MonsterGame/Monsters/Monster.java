@@ -1,4 +1,6 @@
-package minderaExercices.MonsterGame;
+package minderaExercices.MonsterGame.Monsters;
+
+import minderaExercices.MonsterGame.Player;
 
 public abstract class Monster {
 	protected int health;
@@ -25,24 +27,27 @@ public abstract class Monster {
 		return health;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
+	public boolean isDead() {
+		return isDead;
 	}
 
 	public int getDamage() {
 		return damage;
 	}
 
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
 	//*METHODS
 
 	//using This is refereing to the monster that already called method on itself
-	public void sufferHit(int damageOfHit) {
+	public void sufferHit(int damageOfHit, Player currentPlayer) {
 		int healthAfterHit = this.getHealth() - damageOfHit;
 		this.setHealth(healthAfterHit);
 		if (this.getHealth() <= 0) {
 			this.setDead(true);
+			currentPlayer.decreaseCardsAlive();
 		}
 	}
-
-
 }
