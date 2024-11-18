@@ -1,5 +1,10 @@
 package minderaExercices.MonsterGame;
 
+import minderaExercices.MonsterGame.Monsters.Monster;
+import minderaExercices.MonsterGame.Monsters.Mummy;
+import minderaExercices.MonsterGame.Monsters.Vampire;
+import minderaExercices.MonsterGame.Monsters.Warewolf;
+
 public class Game {
 	//trying to use last class subject since players will always be 2 why not set it
 	private final Player[] players = new Player[2];
@@ -19,9 +24,6 @@ public class Game {
 		}
 	}
 
-	//TODO method playRound will be the one to call dealDamage, playRound will also need to check type of monster to
-	// pass correct monster to deal
-	// damage playRound -> check monster type(that are randomly generated) -> dealDamage -> sufferHit
 	private void playRound() {
 		Player player1 = players[0];
 		Player player2 = players[1];
@@ -44,9 +46,8 @@ public class Game {
 	}
 
 	private void handleTurn(Player attacker, Player defense, Monster attackerMonster, Monster defenseMonster) {
-		//todo array tracking attacker rounds monsters id and always compare current id with id in i - 1
 		if (checkMonsterType(attackerMonster)) {
-			dealDamage(attackerMonster, defenseMonster);
+			dealDamage(attackerMonster, defenseMonster, defense);
 			if (defense.hasPlayerLose()) {
 				defense.setHasLost(true);
 			}
@@ -54,9 +55,9 @@ public class Game {
 	}
 
 
-	private void dealDamage(Monster monsterAttacking, Monster monsterGettingHit) {
+	private void dealDamage(Monster monsterAttacking, Monster monsterGettingHit, Player defense) {
 		int damageOfHit = monsterAttacking.getDamage();
-		monsterGettingHit.sufferHit(damageOfHit);
+		monsterGettingHit.sufferHit(damageOfHit, defense);
 	}
 
 	private void dealCards(Player player) {
@@ -88,10 +89,45 @@ public class Game {
 	}
 
 
+	//if monster picked is dead i must pick another one this means calling the generateRandomPick again
 	private Monster generateRandomPick(Player player) {
+		// 0 - 9 indexs
+		Monster[] currentPlayerCards = player.getPlayerCards();
+		int numberOfAttempts = 0;
+
 		int randomIndexToPickFromCards = randomNumberForCardToDeal() - 1;
-		return player.getPlayerCards()[randomIndexToPickFromCards];
+		Monster currentMonster = currentPlayerCards[randomIndexToPickFromCards];
+
+		//first check if the mosnter is dead it is lets go to the while loop then
+		if (!currentMonster.isDead()) {
+			return currentMonster;
+		}
+
+		//do while will numberof attemps is less then half te whole cards
+		while (numberOfAttempts < currentPlayerCards.length / 2) {
+			//generate new position and see if that is not dead
+			int newRandomIndex = randomNumberForCardToDeal() - 1;
+			Monster newMonster = currentPlayerCards[newRandomIndex];
+
+			if (!newMonster.isDead()) {
+				return newMonster;
+			}
+			numberOfAttempts++;
+		}
+
+
+		//not able to find randomly then return first alive monster
+		for (int i = 0; i < currentPlayerCards.length; i++) {
+			if (!currentPlayerCards[i].isDead()) {
+				return currentPlayerCards[i];
+			}
+		}
+
+		//none alive then that player has lost
+		System.out.printf(player.getName() + " has lost no more cards alive");
+		return null;
 	}
+
 
 	//isntead of returning the monster it self i will handle here the check and return if the current mosnter is one
 	// that can perform an ability
@@ -101,12 +137,9 @@ public class Game {
 				return true;
 			}
 		} else if (monster instanceof Mummy mummy) {
-			if (//todo crete mummy special condition it will need to return booelan)
-			//todo mummy.special
-			return true;
+			if (mummy.canPlayAgain()) return true;
+			return false;
 		}
-		//todo handle null by when calling checkmonster in play round if null then type is warewolf
-		//default true means warewolf monster
 		return true;
 	}
 
