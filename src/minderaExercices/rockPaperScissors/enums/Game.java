@@ -149,7 +149,6 @@ public class Game {
 					userMoveScanner.nextLine();//clean scanner
 
 					if (userMove >= 1 && userMove <= 3) {
-						//TODO return option based on number that is Option id
 						//return of choosen Option based on user move number inputed into the scanner
 						return Options.optionChoosen(userMove);
 					} else {
