@@ -10,6 +10,12 @@ public class Player {
 	private boolean hasLost = false;
 	private Monster[] playerCards = new Monster[numberOfInitialCards];
 
+	//this will allow me to not have null index so only alive will be passed and array will always have the needed size
+	private int aliveIndexCounter;
+	private Monster[] cardsAlive;
+
+
+
 	public Player(String name) {
 		this.name = name;
 	}
@@ -20,6 +26,15 @@ public class Player {
 
 	public Monster[] getPlayerCards() {
 		return playerCards;
+	}
+
+	public Monster[] getCardsAlive() {
+		return cardsAlive;
+	}
+
+	//use this to random index in random class
+	public int getAliveIndexCounter() {
+		return aliveIndexCounter;
 	}
 
 	public int getNumberOfCardsAlive() {
@@ -43,5 +58,18 @@ public class Player {
 			return true;
 		}
 		return false;
+	}
+
+	public void updateAliveCards() {
+		//need to create a new one everytime this runs otherwise will not be able to update
+		cardsAlive = new Monster[numberOfCardsAlive];
+		aliveIndexCounter = 0;
+
+		for (int i = 0; i < playerCards.length; i++) {
+			if (!playerCards[i].isDead()) {
+				cardsAlive[aliveIndexCounter] = playerCards[i];
+				aliveIndexCounter++;
+			}
+		}
 	}
 }

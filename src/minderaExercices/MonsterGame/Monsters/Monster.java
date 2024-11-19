@@ -48,6 +48,7 @@ public abstract class Monster {
 		if (this.getHealth() <= 0) {
 			this.setDead(true);
 			currentPlayer.decreaseCardsAlive();
+			currentPlayer.updateAliveCards();
 		}
 	}
 }

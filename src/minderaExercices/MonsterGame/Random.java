@@ -11,8 +11,8 @@ public class Random {
 		return (int) (Math.random() * 100 + 1);
 	}
 
-	public static int generateIndex() {
-		return (int) (Math.random() * Player.getPlayersCardsLength());
+	public static int generateIndex(Player player) {
+		return (int) (Math.random() * player.getAliveIndexCounter());
 	}
 
 }
