@@ -24,31 +24,34 @@ public class Game {
 		}
 	}
 
+	//todo change to play game and maybe separate things and have the while logic in a method
 	private void playRound() {
 		Player player1 = players[0];
 		Player player2 = players[1];
 
 		//keep playing while neither has lost all cards so have a variable for both
-		while (!player1.hasPlayerLose() && !player2.hasPlayerLose()) {
+		while (!player1.hasNoCards() && !player2.hasNoCards()) {
 
-			Monster monsterPlayer1 = generateRandomPick(player1);
-			Monster monsterPlayer2 = generateRandomPick(player2);
+			Monster monsterPlayer1 = generateRandomRoundPick(player1);
+			Monster monsterPlayer2 = generateRandomRoundPick(player2);
 
 			if (roundTrackingCounter % 2 == 0) {
 				//generate here to always pick diferent monster
-				handleTurn(player1, player2, monsterPlayer1, monsterPlayer2);
+				handleTurn(player2, monsterPlayer1, monsterPlayer2);
 			} else {
-				handleTurn(player2, player1, monsterPlayer2, monsterPlayer1);
+				handleTurn(player1, monsterPlayer2, monsterPlayer1);
 			}
 			roundTrackingCounter++;
 		}
 
 	}
 
-	private void handleTurn(Player attacker, Player defense, Monster attackerMonster, Monster defenseMonster) {
+	//no need for attacker player itself be passed since i am passing his selected monster and that is where i will
+	// grab damage to deal from
+	private void handleTurn(Player defense, Monster attackerMonster, Monster defenseMonster) {
 		if (checkMonsterType(attackerMonster)) {
 			dealDamage(attackerMonster, defenseMonster, defense);
-			if (defense.hasPlayerLose()) {
+			if (defense.hasNoCards()) {
 				defense.setHasLost(true);
 			}
 		}
@@ -64,7 +67,7 @@ public class Game {
 		Monster[] currentPlayerHand = player.getPlayerCards();
 		for (int i = 0; i < currentPlayerHand.length; i++) {
 			if (currentPlayerHand[i] == null) {
-				currentPlayerHand[i] = generateRandomCardToDeal();
+				currentPlayerHand[i] = generateRandomDealCard();
 			}
 		}
 	}
@@ -72,8 +75,8 @@ public class Game {
 	//* HELPER FUNCTIONS
 
 	//change of mummy/vampire 40% warewolf 20% duo to stronger and tanky traits
-	private Monster generateRandomCardToDeal() {
-		int randomNumberToDealCard = randomNumberForCardToDeal();
+	private Monster generateRandomDealCard() {
+		int randomNumberToDealCard = Random.generateMonsterType();
 
 		if (randomNumberToDealCard <= 2) {
 			return new Warewolf();
@@ -83,19 +86,14 @@ public class Game {
 	}
 
 
-	//this will be used for both randomize dealing and selecting player move
-	private int randomNumberForCardToDeal() {
-		return (int) (Math.random() * 10 + 1);
-	}
-
-
-	//if monster picked is dead i must pick another one this means calling the generateRandomPick again
-	private Monster generateRandomPick(Player player) {
+	//if monster picked is dead i must pick another one this means calling the generateRandomRoundPick again
+	private Monster generateRandomRoundPick(Player player) {
 		// 0 - 9 indexs
 		Monster[] currentPlayerCards = player.getPlayerCards();
 		int numberOfAttempts = 0;
 
-		int randomIndexToPickFromCards = randomNumberForCardToDeal() - 1;
+		//todo change max random number to be array size
+		int randomIndexToPickFromCards = Random.generateIndex();
 		Monster currentMonster = currentPlayerCards[randomIndexToPickFromCards];
 
 		//first check if the mosnter is dead it is lets go to the while loop then
@@ -106,7 +104,7 @@ public class Game {
 		//do while will numberof attemps is less then half te whole cards
 		while (numberOfAttempts < currentPlayerCards.length / 2) {
 			//generate new position and see if that is not dead
-			int newRandomIndex = randomNumberForCardToDeal() - 1;
+			int newRandomIndex = Random.generateIndex();
 			Monster newMonster = currentPlayerCards[newRandomIndex];
 
 			if (!newMonster.isDead()) {
@@ -129,18 +127,21 @@ public class Game {
 	}
 
 
-	//isntead of returning the monster it self i will handle here the check and return if the current mosnter is one
-	// that can perform an ability
+	//check first mummy other wise i would no be able to reset its repeatedAttacksCounter because of access and scole
+	// problem since casted mummy inst accessible to other instance of monster
 	private boolean checkMonsterType(Monster monster) {
-		if (monster instanceof Vampire vampire) {
-			if (vampire.bite()) {
+		if (monster instanceof Mummy mummy) {
+			if (mummy.canPlayAgain()) {
+				mummy.increaseRepeatedAttacks();
 				return true;
 			}
-		} else if (monster instanceof Mummy mummy) {
-			if (mummy.canPlayAgain()) return true;
+			mummy.penaltyDamage();
+			mummy.resetReapeadAttacks();
 			return false;
+		} else if (monster instanceof Vampire vampire) {
+			vampire.bite();
+			return true;
 		}
 		return true;
 	}
-
 }

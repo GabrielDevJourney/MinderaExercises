@@ -2,7 +2,9 @@ package minderaExercices.MonsterGame.Monsters;
 
 public class Mummy extends Monster {
 
+	//static so i can reset when other cards are played
 	private int repeatedAttacks = 0;
+	private int penaltyDamage = 10;
 
 	public Mummy() {
 		super();
@@ -14,8 +16,15 @@ public class Mummy extends Monster {
 		return repeatedAttacks != 3;
 	}
 
-	//todo will call this everytime its now a mummy playing?
+	public void increaseRepeatedAttacks() {
+		repeatedAttacks++;
+	}
+
 	public void resetReapeadAttacks() {
 		repeatedAttacks = 0;
+	}
+
+	public void penaltyDamage() {
+		health -= penaltyDamage;
 	}
 }
