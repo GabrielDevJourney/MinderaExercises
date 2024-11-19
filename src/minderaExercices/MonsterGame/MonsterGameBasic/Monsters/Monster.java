@@ -7,12 +7,6 @@ public abstract class Monster {
 	protected int health;
 	protected int damage;
 	protected boolean isDead;
-	protected int id;
-	protected static int idCounter = 0;
-
-	public Monster() {
-		this.id = idCounter++;
-	}
 
 	//if I need all monsters to have an id this also means that those id must be different with simply incrementing
 	// so all will share id this means the current monster id will be last one set ++ this should be incremented in
@@ -20,16 +14,9 @@ public abstract class Monster {
 
 	//*GETTERS AND SETTERS
 
-	public void setDead(boolean dead) {
-		isDead = dead;
-	}
 
 	public int getHealth() {
 		return health;
-	}
-
-	public boolean isDead() {
-		return isDead;
 	}
 
 	public String getName() {
@@ -40,18 +27,29 @@ public abstract class Monster {
 		return damage;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
+	public boolean isDead() {
+		return isDead;
+	}
+
+	//check for zero health this means mosnter is dead
+	public void setHealth(int healthAfterHit) {
+		if (healthAfterHit < 0) {
+			this.health = 0;
+			isDead = true;
+		} else {
+			this.health = healthAfterHit;
+		}
 	}
 
 	//*METHODS
+
+	public abstract void specialAbility();
 
 	//using This is referring to the monster that already called method on itself
 	public void sufferHit(int damageOfHit, Player currentPlayer) {
 		int healthAfterHit = this.getHealth() - damageOfHit;
 		this.setHealth(healthAfterHit);
-		if (this.getHealth() <= 0) {
-			this.setDead(true);
+		if (this.isDead) {
 			currentPlayer.decreaseCardsAlive();
 			currentPlayer.updateAliveCards();
 		}

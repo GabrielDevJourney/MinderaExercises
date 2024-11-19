@@ -12,6 +12,17 @@ public class Mummy extends Monster {
 		name = "Mummy";
 	}
 
+	@Override
+	public void specialAbility() {
+		if (canPlayAgain()) {
+			increaseRepeatedAttacks();
+		} else {
+			penaltyDamage();
+			resetRepeatedAttacks();
+
+		}
+	}
+
 	public boolean canPlayAgain() {
 		return repeatedAttacks != 3;
 	}

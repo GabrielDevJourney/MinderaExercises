@@ -11,6 +11,11 @@ public class Vampire extends Monster {
 		name = "Vampire";
 	}
 
+	@Override
+	public void specialAbility() {
+		bite();
+	}
+
 	//to utilize in game I must return if vampire will bite or not so the action will occur in game
 	public void bite() {
 		int changeOfBite = Random.generateBiteChange();
