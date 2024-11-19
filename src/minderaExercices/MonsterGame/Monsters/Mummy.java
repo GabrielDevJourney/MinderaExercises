@@ -2,14 +2,14 @@ package minderaExercices.MonsterGame.Monsters;
 
 public class Mummy extends Monster {
 
-	//static so i can reset when other cards are played
+	//static so I can reset when other cards are played
 	private int repeatedAttacks = 0;
-	private int penaltyDamage = 10;
 
 	public Mummy() {
 		super();
 		health = 120;
 		damage = 15;
+		name = "Mummy";
 	}
 
 	public boolean canPlayAgain() {
@@ -20,11 +20,12 @@ public class Mummy extends Monster {
 		repeatedAttacks++;
 	}
 
-	public void resetReapeadAttacks() {
+	public void resetRepeatedAttacks() {
 		repeatedAttacks = 0;
 	}
 
 	public void penaltyDamage() {
+		int penaltyDamage = 10;
 		health -= penaltyDamage;
 	}
 }

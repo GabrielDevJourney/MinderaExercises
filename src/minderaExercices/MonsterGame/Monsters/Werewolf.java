@@ -1,11 +1,12 @@
 package minderaExercices.MonsterGame.Monsters;
 
-public class Warewolf extends Monster {
+public class Werewolf extends Monster {
 
-	public Warewolf() {
+	public Werewolf() {
 		super();
 		health = 140;
 		damage = 20;
+		name = "Werewolf";
 	}
 
 }

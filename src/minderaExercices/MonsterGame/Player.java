@@ -4,11 +4,12 @@ import minderaExercices.MonsterGame.Monsters.Monster;
 
 public class Player {
 
-	private static int numberOfInitialCards = 10;
+	//final variables since i will not change tits value
+	private static final int numberOfInitialCards = 4;
 	private int numberOfCardsAlive = numberOfInitialCards;
-	private String name;
+	private final String name;
 	private boolean hasLost = false;
-	private Monster[] playerCards = new Monster[numberOfInitialCards];
+	private final Monster[] playerCards = new Monster[numberOfInitialCards];
 
 	//this will allow me to not have null index so only alive will be passed and array will always have the needed size
 	private int aliveIndexCounter;
@@ -20,9 +21,6 @@ public class Player {
 		this.name = name;
 	}
 
-	public static int getPlayersCardsLength() {
-		return numberOfInitialCards - 1;
-	}
 
 	public Monster[] getPlayerCards() {
 		return playerCards;
@@ -37,12 +35,12 @@ public class Player {
 		return aliveIndexCounter;
 	}
 
-	public int getNumberOfCardsAlive() {
-		return numberOfCardsAlive;
-	}
-
 	public String getName() {
 		return name;
+	}
+
+	public boolean isHasLost() {
+		return hasLost;
 	}
 
 	public void setHasLost(boolean hasLost) {
@@ -54,10 +52,7 @@ public class Player {
 	}
 
 	public boolean hasNoCards() {
-		if (numberOfCardsAlive == 0) {
-			return true;
-		}
-		return false;
+		return numberOfCardsAlive == 0;
 	}
 
 	public void updateAliveCards() {
@@ -65,9 +60,9 @@ public class Player {
 		cardsAlive = new Monster[numberOfCardsAlive];
 		aliveIndexCounter = 0;
 
-		for (int i = 0; i < playerCards.length; i++) {
-			if (!playerCards[i].isDead()) {
-				cardsAlive[aliveIndexCounter] = playerCards[i];
+		for (Monster playerCard : playerCards) {
+			if (!playerCard.isDead()) {
+				cardsAlive[aliveIndexCounter] = playerCard;
 				aliveIndexCounter++;
 			}
 		}

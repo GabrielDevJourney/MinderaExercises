@@ -3,6 +3,7 @@ package minderaExercices.MonsterGame.Monsters;
 import minderaExercices.MonsterGame.Player;
 
 public abstract class Monster {
+	protected String name;
 	protected int health;
 	protected int damage;
 	protected boolean isDead;
@@ -13,9 +14,9 @@ public abstract class Monster {
 		this.id = idCounter++;
 	}
 
-	//if i need all monsters to have an id this also means that those id must be different with symply incrementeing
+	//if I need all monsters to have an id this also means that those id must be different with simply incrementing
 	// so all will share id this means the current monster id will be last one set ++ this should be incremented in
-	// mosnter but i can do something like in each each monster type this.id = id++
+	// monster, but I can do something like in each monster type this.id = id++
 
 	//*GETTERS AND SETTERS
 
@@ -31,6 +32,10 @@ public abstract class Monster {
 		return isDead;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public int getDamage() {
 		return damage;
 	}
@@ -41,7 +46,7 @@ public abstract class Monster {
 
 	//*METHODS
 
-	//using This is refereing to the monster that already called method on itself
+	//using This is referring to the monster that already called method on itself
 	public void sufferHit(int damageOfHit, Player currentPlayer) {
 		int healthAfterHit = this.getHealth() - damageOfHit;
 		this.setHealth(healthAfterHit);

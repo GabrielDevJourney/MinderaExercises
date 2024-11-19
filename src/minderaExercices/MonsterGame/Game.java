@@ -3,7 +3,7 @@ package minderaExercices.MonsterGame;
 import minderaExercices.MonsterGame.Monsters.Monster;
 import minderaExercices.MonsterGame.Monsters.Mummy;
 import minderaExercices.MonsterGame.Monsters.Vampire;
-import minderaExercices.MonsterGame.Monsters.Warewolf;
+import minderaExercices.MonsterGame.Monsters.Werewolf;
 
 public class Game {
 	//trying to use last class subject since players will always be 2 why not set it
@@ -26,29 +26,76 @@ public class Game {
 		}
 	}
 
-	//todo change to play game and maybe separate things and have the while logic in a method
-	private void playRound() {
+	public void start() {
+		playGame();
+	}
+
+	private void playGame() {
 		Player player1 = players[0];
 		Player player2 = players[1];
 
 		//keep playing while neither has lost all cards so have a variable for both
 		while (!player1.hasNoCards() && !player2.hasNoCards()) {
 
-			Monster monsterPlayer1 = generateRandomRoundPick(player1);
-			Monster monsterPlayer2 = generateRandomRoundPick(player2);
-
-			if (roundTrackingCounter % 2 == 0) {
-				//generate here to always pick diferent monster
-				handleTurn(player2, monsterPlayer1, monsterPlayer2);
-			} else {
-				handleTurn(player1, monsterPlayer2, monsterPlayer1);
-			}
+			playRound(player1, player2);
 			roundTrackingCounter++;
+		}
+
+		endGame(player1, player2);
+
+	}
+
+	private void playRound(Player player1, Player player2) {
+
+		Monster monsterPlayer1 = generateRandomRoundPick(player1);
+		Monster monsterPlayer2 = generateRandomRoundPick(player2);
+
+
+		if (roundTrackingCounter % 2 == 0) {
+			//generate here to always pick different monster
+
+			//!terminal
+			System.out.println("\nRound " + roundTrackingCounter);
+
+			System.out.println(player1.getName() + " is attacking and " + player2.getName() + " is being attacked!");
+
+			System.out.println(player1.getName() + "'s monster: " + monsterPlayer1.getName() +
+					" (HP: " + monsterPlayer1.getHealth() + ")");
+			System.out.println(player2.getName() + "'s monster: " + monsterPlayer2.getName() +
+					" (HP: " + monsterPlayer2.getHealth() + ")");
+
+			//!terminal
+
+			handleTurn(player2, monsterPlayer1, monsterPlayer2);
+		} else {
+
+			//!terminal
+
+			System.out.println("\nRound " + roundTrackingCounter);
+			System.out.println(player2.getName() + " is attacking and " + player1.getName() + " is being attacked!");
+
+			System.out.println(player1.getName() + "'s monster: " + monsterPlayer1.getName() +
+					" (HP: " + monsterPlayer1.getHealth() + ")");
+			System.out.println(player2.getName() + "'s monster: " + monsterPlayer2.getName() +
+					" (HP: " + monsterPlayer2.getHealth() + ")");
+
+			//!terminal
+
+			handleTurn(player1, monsterPlayer2, monsterPlayer1);
 		}
 
 	}
 
-	//no need for attacker player itself be passed since i am passing his selected monster and that is where i will
+	private void endGame(Player player1, Player player2) {
+		if (player1.isHasLost()) {
+			System.out.printf(player1.getName() + " has lost! " + player2.getName() + " wins!");
+		} else {
+			System.out.printf(player2.getName() + " has lost! " + player1.getName() + " wins!");
+		}
+	}
+
+
+	//no need for attacker player itself be passed since I am passing his selected monster and that is where i will
 	// grab damage to deal from
 	private void handleTurn(Player defense, Monster attackerMonster, Monster defenseMonster) {
 		if (checkMonsterType(attackerMonster)) {
@@ -63,6 +110,10 @@ public class Game {
 	private void dealDamage(Monster monsterAttacking, Monster monsterGettingHit, Player defense) {
 		int damageOfHit = monsterAttacking.getDamage();
 		monsterGettingHit.sufferHit(damageOfHit, defense);
+
+		//!terminal
+		System.out.println("Damage dealt to " + monsterGettingHit.getName() + " " + damageOfHit + " damage");
+		System.out.println(monsterGettingHit.getName() + " health after hit: " + monsterGettingHit.getHealth());
 	}
 
 	private void dealCards(Player player) {
@@ -76,19 +127,19 @@ public class Game {
 
 	//* HELPER FUNCTIONS
 
-	//change of mummy/vampire 40% warewolf 20% duo to stronger and tanky traits
+	//change of mummy/vampire 40% werewolf 20% duo to stronger and tank traits
 	private Monster generateRandomDealCard() {
 		int randomNumberToDealCard = Random.generateMonsterType();
 
 		if (randomNumberToDealCard <= 2) {
-			return new Warewolf();
+			return new Werewolf();
 			//will go to next since num is above 3 no need for &&
 		} else if (randomNumberToDealCard <= 6) return new Mummy();
 		return new Vampire();
 	}
 
 
-	//if monster picked is dead i must pick another one this means calling the generateRandomRoundPick again
+	//if monster picked is dead I must pick another one this means calling the generateRandomRoundPick again
 	private Monster generateRandomRoundPick(Player player) {
 		int randomIndex = Random.generateIndex(player);
 
@@ -102,8 +153,9 @@ public class Game {
 	}
 
 
-	//check first mummy other wise i would no be able to reset its repeatedAttacksCounter because of access and scole
+	//check first mummy other wise i would no be able to reset its repeatedAttacksCounter because of access and scope
 	// problem since casted mummy inst accessible to other instance of monster
+	//todo make this to be a responsibility of each monster itself
 	private boolean checkMonsterType(Monster monster) {
 		if (monster instanceof Mummy mummy) {
 			if (mummy.canPlayAgain()) {
@@ -111,7 +163,7 @@ public class Game {
 				return true;
 			}
 			mummy.penaltyDamage();
-			mummy.resetReapeadAttacks();
+			mummy.resetRepeatedAttacks();
 			return false;
 		} else if (monster instanceof Vampire vampire) {
 			vampire.bite();
