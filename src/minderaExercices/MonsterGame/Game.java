@@ -21,6 +21,8 @@ public class Game {
 	private void initializePlayersHands() {
 		for (Player player : players) {
 			dealCards(player);
+			//initialize cardsAlive with all new cards
+			player.updateAliveCards();
 		}
 	}
 
@@ -88,42 +90,15 @@ public class Game {
 
 	//if monster picked is dead i must pick another one this means calling the generateRandomRoundPick again
 	private Monster generateRandomRoundPick(Player player) {
-		// 0 - 9 indexs
-		Monster[] currentPlayerCards = player.getPlayerCards();
-		int numberOfAttempts = 0;
+		int randomIndex = Random.generateIndex(player);
 
-		//todo change max random number to be array size
-		int randomIndexToPickFromCards = Random.generateIndex();
-		Monster currentMonster = currentPlayerCards[randomIndexToPickFromCards];
-
-		//first check if the mosnter is dead it is lets go to the while loop then
-		if (!currentMonster.isDead()) {
-			return currentMonster;
+		if (player.getCardsAlive() == null) {
+			player.updateAliveCards();
 		}
 
-		//do while will numberof attemps is less then half te whole cards
-		while (numberOfAttempts < currentPlayerCards.length / 2) {
-			//generate new position and see if that is not dead
-			int newRandomIndex = Random.generateIndex();
-			Monster newMonster = currentPlayerCards[newRandomIndex];
+		Monster[] currentPlayerCards = player.getCardsAlive();
+		return currentPlayerCards[randomIndex];
 
-			if (!newMonster.isDead()) {
-				return newMonster;
-			}
-			numberOfAttempts++;
-		}
-
-
-		//not able to find randomly then return first alive monster
-		for (int i = 0; i < currentPlayerCards.length; i++) {
-			if (!currentPlayerCards[i].isDead()) {
-				return currentPlayerCards[i];
-			}
-		}
-
-		//none alive then that player has lost
-		System.out.printf(player.getName() + " has lost no more cards alive");
-		return null;
 	}
 
 
