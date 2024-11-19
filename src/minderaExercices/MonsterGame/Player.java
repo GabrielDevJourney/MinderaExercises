@@ -4,15 +4,18 @@ import minderaExercices.MonsterGame.Monsters.Monster;
 
 public class Player {
 
-	private int numberOfInitialCards = 10;
+	private static int numberOfInitialCards = 10;
 	private int numberOfCardsAlive = numberOfInitialCards;
 	private String name;
 	private boolean hasLost = false;
-
 	private Monster[] playerCards = new Monster[numberOfInitialCards];
 
 	public Player(String name) {
 		this.name = name;
+	}
+
+	public static int getPlayersCardsLength() {
+		return numberOfInitialCards - 1;
 	}
 
 	public Monster[] getPlayerCards() {
@@ -27,10 +30,6 @@ public class Player {
 		return name;
 	}
 
-	public void setPlayerCards(Monster[] playerCards) {
-		this.playerCards = playerCards;
-	}
-
 	public void setHasLost(boolean hasLost) {
 		this.hasLost = hasLost;
 	}
@@ -38,7 +37,8 @@ public class Player {
 	public void decreaseCardsAlive() {
 		numberOfCardsAlive--;
 	}
-	public boolean hasPlayerLose() {
+
+	public boolean hasNoCards() {
 		if (numberOfCardsAlive == 0) {
 			return true;
 		}
