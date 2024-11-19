@@ -1,9 +1,9 @@
-package minderaExercices.MonsterGame;
+package minderaExercices.MonsterGame.MonsterGameImproved;
 
-import minderaExercices.MonsterGame.Monsters.Monster;
-import minderaExercices.MonsterGame.Monsters.Mummy;
-import minderaExercices.MonsterGame.Monsters.Vampire;
-import minderaExercices.MonsterGame.Monsters.Werewolf;
+import minderaExercices.MonsterGame.MonsterGameImproved.Monsters.Monster;
+import minderaExercices.MonsterGame.MonsterGameImproved.Monsters.Mummy;
+import minderaExercices.MonsterGame.MonsterGameImproved.Monsters.Vampire;
+import minderaExercices.MonsterGame.MonsterGameImproved.Monsters.Werewolf;
 
 public class Game {
 	//trying to use last class subject since players will always be 2 why not set it

@@ -1,4 +1,4 @@
-package minderaExercices.MonsterGame.Monsters;
+package minderaExercices.MonsterGame.MonsterGameBasic.Monsters;
 
 public class Mummy extends Monster {
 

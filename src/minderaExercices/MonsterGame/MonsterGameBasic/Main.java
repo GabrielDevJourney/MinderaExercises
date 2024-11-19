@@ -1,4 +1,4 @@
-package minderaExercices.MonsterGame;
+package minderaExercices.MonsterGame.MonsterGameBasic;
 
 public class Main {
 	public static void main(String[] args) {
